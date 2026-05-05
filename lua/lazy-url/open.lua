@@ -68,7 +68,7 @@ local function match_custom(url, custom_list)
             vim.notify(
               string.format(
                 'lazy-url: custom handler args[%d] must be a string, got %s (%s). '
-                  .. 'Hint: `{ url:gsub(...) }` captures gsub\'s replacement count too — '
+                  .. "Hint: `{ url:gsub(...) }` captures gsub's replacement count too — "
                   .. 'wrap in parens: `{ (url:gsub(...)) }`.',
                 i,
                 type(a),

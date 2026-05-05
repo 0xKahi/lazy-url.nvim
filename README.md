@@ -91,6 +91,13 @@ LazyUrl.open(url)          -- open the given URL string directly
 LazyUrl.config             -- read-only snapshot of merged config (do not mutate post-setup)
 ```
 
+```lua
+require('lazy-url').setup(opts)        -- merge user opts; idempotent (last call wins)
+require('lazy-url').smart_open()       -- detect URL from cursor (normal) or visual selection, then open
+require('lazy-url').open(url)          -- open the given URL string directly
+require('lazy-url').config             -- read-only snapshot of merged config (do not mutate post-setup)
+```
+
 Both `smart_open()` and `open(url)` return `boolean`:
 - `true` — dispatch began (URL was valid; picker shown OR command launched)
 - `false` — no URL detected (smart_open) OR empty/invalid URL (open)
@@ -107,8 +114,6 @@ Both `smart_open()` and `open(url)` return `boolean`:
 6. None → notify WARN, return `false`
 
 Trailing punctuation (`. , ; : ! ? )`) is stripped from detected URLs.
-
-> **Why `_get_urls()` is a fallback, not the primary source:** in plugin-rich environments (Obsidian, `marksman`, markdown LSPs), `vim.ui._get_urls()` returns `file://` URIs and resolved vault paths that have nothing to do with the URL under your cursor. Cursor-position scans give a much stronger semantic signal, so they run first. The fallback is also restricted to `http(s)://` to avoid routing arbitrary schemes through the browser dispatcher.
 
 ### Custom handlers
 
@@ -198,7 +203,3 @@ LazyUrl.open('https://github.com/folke/lazy.nvim')
 - Multiple URLs on the same cursor line — first match under cursor wins; no multi-URL picker
 - IPv6 URLs (`http://[::1]:8080`) — not supported by the bare-URL pattern
 - No `:checkhealth lazy-url` (planned for v2)
-
-## License
-
-MIT

@@ -87,12 +87,7 @@ function M.validate(config)
       end
     end
     if not found then
-      error(
-        string.format(
-          "lazy-url: default_browser '%s' is not in the browsers list",
-          config.default_browser
-        )
-      )
+      error(string.format("lazy-url: default_browser '%s' is not in the browsers list", config.default_browser))
     end
   end
   for i, entry in ipairs(config.custom) do
