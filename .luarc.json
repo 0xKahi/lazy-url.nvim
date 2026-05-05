@@ -1,0 +1,24 @@
+{
+  "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+  "runtime": {
+    "version": "LuaJIT"
+  },
+  "workspace": {
+    "checkThirdParty": false,
+    "library": [
+      "$VIMRUNTIME/lua",
+      "$VIMRUNTIME/lua/vim/lsp",
+      "${3rd}/luv/library"
+    ]
+  },
+  "diagnostics": {
+    "globals": ["vim", "LazyUrl"],
+    "disable": ["missing-fields"]
+  },
+  "telemetry": {
+    "enable": false
+  },
+  "format": {
+    "enable": false
+  }
+}
