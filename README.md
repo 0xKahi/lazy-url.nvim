@@ -66,6 +66,7 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim):
 | `chrome`  | `open -a 'Google Chrome'`      | `google-chrome`      | `start chrome`  |
 | `safari`  | `open -a Safari`               | (unsupported)        | (unsupported)   |
 | `arc`     | `open -a Arc`                  | (unsupported)        | (unsupported)   |
+| `dia`     | `open -a Dia`                  | (unsupported)        | (unsupported)   |
 | `zen`     | `open -a 'Zen Browser'`        | `zen-browser`        | `start zen`     |
 | `edge`    | `open -a 'Microsoft Edge'`     | `microsoft-edge`     | `start msedge`  |
 

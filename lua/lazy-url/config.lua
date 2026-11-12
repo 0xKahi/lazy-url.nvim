@@ -44,6 +44,9 @@ M.presets = {
   arc = {
     mac = { cmd = 'open', args = { '-a', 'Arc' } },
   },
+  dia = {
+    mac = { cmd = 'open', args = { '-a', 'Dia' } },
+  },
   zen = {
     mac = { cmd = 'open', args = { '-a', 'Zen Browser' } },
     linux = { cmd = 'zen-browser', args = {} },
