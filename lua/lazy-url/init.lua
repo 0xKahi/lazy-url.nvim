@@ -3,6 +3,7 @@
 ---@field setup fun(opts?: LazyUrl.Config)
 ---@field smart_open fun(): boolean
 ---@field open fun(url: string): boolean
+---@field rex { reset: fun() } Rex routing; `LazyUrl.rex.reset()` clears cached host discovery
 local M = {}
 
 -- Lazy submodule loading (snacks.nvim pattern).
