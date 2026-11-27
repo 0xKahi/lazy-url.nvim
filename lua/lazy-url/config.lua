@@ -2,6 +2,11 @@
 ---@field browsers (string[] | table<string, LazyUrl.Browser>) list of preset names (string array) or map of name to override
 ---@field custom LazyUrl.CustomList ordered list of pattern→handler entries
 ---@field default_browser? string if set, must be a name present in browsers
+---@field rex? LazyUrl.Rex route opens to the machine running the Rex app you type from
+
+---@class LazyUrl.Rex
+---@field action? string name of the Rex action (defined in the viewing machine's init.lua) that opens a URL; routing is enabled only when set
+---@field host? string Rex host label/address to send opens to; skips host discovery
 
 ---@class LazyUrl.Browser
 ---@field cmd? string | string[] override the preset command
@@ -9,13 +14,17 @@
 
 ---@class LazyUrl.CustomEntry
 ---@field pattern string Lua pattern (NOT PCRE) matched against the full URL
----@field handler fun(url: string): LazyUrl.Command transform url to command spec (args already include url)
+---@field handler fun(url: string): LazyUrl.Command | LazyUrl.UrlResult transform url to a command spec (args already include url) or a URL to open
 
 ---@alias LazyUrl.CustomList LazyUrl.CustomEntry[]
 
 ---@class LazyUrl.Command
 ---@field cmd string executable name
 ---@field args? string[] arguments (handler is responsible for including the transformed URL)
+
+---@class LazyUrl.UrlResult
+---@field url string URL to open (sent to the Rex action when routed, opened locally otherwise)
+---@field app? string application name (macOS `open -a`); omit for the default handler
 
 local M = {}
 
@@ -65,6 +74,7 @@ M.defaults = {
   browsers = { 'default' },
   custom = {},
   default_browser = nil,
+  rex = { action = nil, host = nil },
 }
 
 ---Merge user opts with defaults. Arrays at the same key REPLACE (not concat).
@@ -91,6 +101,17 @@ function M.validate(config)
     end
     if not found then
       error(string.format("lazy-url: default_browser '%s' is not in the browsers list", config.default_browser))
+    end
+  end
+  if config.rex ~= nil then
+    if type(config.rex) ~= 'table' then
+      error('lazy-url: rex must be a table', 0)
+    end
+    for _, field in ipairs({ 'action', 'host' }) do
+      local v = config.rex[field]
+      if v ~= nil and (type(v) ~= 'string' or v == '') then
+        error(string.format('lazy-url: rex.%s must be a non-empty string, got %s', field, vim.inspect(v)), 0)
+      end
     end
   end
   for i, entry in ipairs(config.custom) do
